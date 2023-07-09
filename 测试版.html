@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>霍格沃兹大冒险</title>
+</head>
+
+<body>
+    <style>
+        :root {
+            box-sizing: border-box;
+        }
+
+        html,
+
+        body {
+            background-image: url("背景.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+
+        body,
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #游戏说明 {
+            background-color: rgba(176, 210, 239, 0.398);
+            color: rgba(0, 0, 0, 0.377);
+        }
+
+        #游戏界面 {
+            height: 100vh;
+        }
+
+        .总结 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin: 0 auto;
+            border: 3px solid blanchedalmond;
+            width: 400px;
+            height: 400px;
+            text-align: center;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            background-color: rgba(240, 248, 255, 0.382);
+        }
+
+        .游戏 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .option {
+            width: 30%;
+            margin: 10px 15px;
+            padding: 25px;
+            text-align: center;
+            font-size: 30px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            background-color: rgba(255, 228, 196, 0.545);
+        }
+
+        .option:hover {
+            cursor: pointer;
+            background-color: rgba(222, 184, 135, 0.865);
+        }
+
+        .按钮 {
+            width: 90px;
+            height: 60px;
+            font-size: 20px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            background-color: rgba(33, 181, 239, 0.703);
+        }
+
+        .按钮:hover {
+            cursor: pointer;
+            background-color: rgba(33, 139, 252, 0.865);
+        }
+
+        .大冒险 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+
+        .text {
+            background-color: rgba(196, 235, 255, 0.498);
+            width: 500px;
+            height: 30px;
+            margin: 20px 50px;
+            padding: 25px;
+            font-size: 20px;
+        }
+    </style>
+
+    <audio id="myAudio">
+        <source src="music.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <div id="游戏说明">
+        <h2>咒语规则</h2>
+        <h3>Enforgio变大咒>Reducio变小咒; Reducio变小咒>Lumos荧光闪烁; Lumos荧光闪烁>Enforgio变大咒</h3>
+    </div>
+    <div id="游戏界面">
+        <div class="总结">
+            <h1>霍格沃兹大冒险</h1>
+            <h4 class="title">与多比魔法决斗！输了要大冒险哦</h4>
+            <br />
+            <h1 id="inGame"></h1>
+            <h3 id="result"></h3>
+        </div>
+        <div class="游戏">
+            <div class="option" onclick="pickOption('Reducio')">Reducio</div>
+            <div class="option" onclick="pickOption('Enforgio')">Enforgio</div>
+            <div class="option" onclick="pickOption('Lumos')">Lumos</div>
+        </div>
+        <div class="大冒险 adventure">
+            <button onclick="displayRandomText()" class="按钮">接受冒险</button>
+            <input type="text" class="text" id="randomText">
+            <button id="submitButton" class="按钮">开始</button>
+        </div>
+    </div>
+    <script>
+
+    </script>
+    <script>
+        document.body.addEventListener('click', function () {
+            var audio = document.getElementById("myAudio");
+            audio.play();
+        });
+    </script>
+    <script>
+        class Start {
+            constructor() {
+                this.playerName = "你"
+                this.botName = "多比"
+                this.playerOption;
+                this.botOption;
+                this.winner = ""
+            }
+
+            get getBotOption() {
+                return this.botOption;
+            }
+
+            set setBotOption(option) {
+                this.botOption = option;
+            }
+
+            get getPlayerOption() {
+                return this.playerOption
+            }
+
+            set setPlayerOption(option) {
+                this.playerOption = option;
+            }
+
+            botBrain() {
+                const option = ["Reducio", "Enforgio", "Lumos"];
+                const bot = option[Math.floor(Math.random() * option.length)];
+                return bot;
+            }
+
+            winCalculation() {
+                if (this.botOption == "Reducio" && this.playerOption == "Enforgio") {
+                    return this.winner = this.playerName
+                } else if (this.botOption == "Reducio" && this.playerOption == "Lumos") {
+                    return this.winner = this.botName;
+                } else if (this.botOption == "Enforgio" && this.playerOption == "Reducio") {
+                    return this.winner = this.botName;
+                } else if (this.botOption == "Enforgio" && this.playerOption == "Lumos") {
+                    return this.winner = this.playerName
+                } else if (this.botOption == "Lumos" && this.playerOption == "Reducio") {
+                    return this.winner = this.playerName
+                } else if (this.botOption == "Lumos" && this.playerOption == "Enforgio") {
+                    return this.winner = this.botName;
+                }
+                else {
+                    return this.winner = ""
+                }
+            }
+
+            matchResult() {
+                if (this.winner == this.botName) {
+                    adventure.style.opacity = '1';
+                } else {
+                    adventure.style.opacity = '0';
+                }
+                if (this.winner == this.playerName) {
+                    return `恭喜通关!`;
+                }
+                else if (this.winner == this.botName) {
+                    adventure.style.opacity = '1';
+
+                    return `${this.winner} 赢啦!`;
+                }
+                else {
+                    return `哈哈,再来一次吧🤪`;
+                }
+            }
+
+
+        }
+        var inGame = document.getElementById("inGame");
+        var result = document.getElementById("result");
+
+        function pickOption(params) {
+            const start = new Start();
+            start.setPlayerOption = params;
+            start.setBotOption = start.botBrain();
+            start.winCalculation();
+            inGame.textContent = "..."
+            result.textContent = "..."
+
+            setTimeout(() => {
+                inGame.textContent = `${start.getPlayerOption} VS ${start.getBotOption}`
+                result.textContent = start.matchResult();
+
+
+            }, 1500);
+
+
+
+        }
+    </script>
+    <script>
+        // 获取输入字段和按钮的引用
+        var randomText = document.getElementById("randomText");
+        var submitButton = document.getElementById("submitButton");
+
+        function displayRandomText() {
+            var texts = ["去禁林寻找伏地魔的踪迹（祝你好运~）", "到密室与蛇怪大战（别看它的眼睛！）", "偷走卢修斯的袜子（Dobby is free！）", "把马尔福变成雪貂（嘿嘿嘿）"];
+            var randomText = texts[Math.floor(Math.random() * texts.length)];
+            document.getElementById("randomText").value = randomText;
+            // 
+            submitButton.onclick = function () {
+                if (randomText === texts[0]) {
+                    window.location.href = "https://b23.tv/v1elDf4";
+                } else if (randomText === texts[1]) {
+                    window.location.href = "https://b23.tv/Q96PFFP";
+                } else if (randomText === texts[2]) {
+                    window.location.href = "https://b23.tv/6zgbUAM";
+                } else if (randomText === texts[3]) {
+                    window.location.href = "https://b23.tv/7g5Phtq";
+                }
+                else {
+                    alert("请检查网络");
+                }
+
+            }
+
+
+
+        }
+
+
+        var adventure = document.querySelector('.adventure');
+        console.log(adventure);
+        adventure.style.opacity = '0';
+
+    </script>
+</body>
+
+</html>
